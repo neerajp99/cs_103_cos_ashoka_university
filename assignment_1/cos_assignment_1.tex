@@ -1,0 +1,159 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,textcomp,amssymb,geometry,graphicx,enumerate}
+\usepackage{algorithm} % Boxes/formatting around algorithms
+\usepackage[noend]{algpseudocode} % Algorithms
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\def\Name{Neeraj Pandey}  % Your name
+%\def\SID{PUT SOMETHING HERE}  % Your student ID number
+%\def\Login{PUT SOMETHING HERE} % Your login (your class account, cs170-xy)
+\def\Homework{1} % Number of Homework
+\def\Session{Monsoon 2018}
+
+
+\title{CS103 -- Monsoon 2018 --- Homework \Homework}
+\author{\Name 
+%SID \SID, 
+%\texttt{\Login}
+}
+\markboth{CS103\Session\  Homework \Homework\ \Name}{CS103--\Session\ Homework \Homework\ \Name, %\texttt{\Login}
+}
+\pagestyle{myheadings}
+\date{}
+
+\newenvironment{qparts}{\begin{enumerate}[{(}a{)}]}{\end{enumerate}}
+\def\endproofmark{$\Box$}
+\newenvironment{proof}{\par{\bf Proof}:}{\endproofmark\smallskip}
+
+\textheight=9in
+\textwidth=6.5in
+\topmargin=-.75in
+\oddsidemargin=0.25in
+\evensidemargin=0.25in
+
+
+\begin{document}
+\maketitle
+
+Collaborators: HITESH KHANDELWAL
+
+\section*{1. My rudimentary processor consists of 4 circuits, an integer adder,a floating point adder, a multiplier and a divider. These units takes 850 ps, 1200 ps, 2800 ps and 3000 ps, respectively. The processor is functioning under the constraint that it has to finish an instruction every cycle, irrespective of the type of instruction, and that the units receive their inputs only at the rising edge of the clock.
+}
+\begin{qparts}
+\item
+Which unit would decide the frequency of the processor?
+\newline
+\textbf{Solution: }
+Divider is the circuit that decides the frequency of the processor.
+\item
+What will the frequency of the processor be ?
+\newline
+\textbf{Solution: } \[\bigg(\frac{1}{300}*10^{-9}\bigg) = 3.3^{-12} = 3.3 GHz\]
+
+\end{qparts}
+
+\section*{2. A Program X takes 9 seconds to complete on an Intel processor. The same program takes 12 seconds to complete on a $RISC-V^{1}$ processor.
+}
+\begin{qparts}
+\item
+What is the speedup of the Intel processor over the RISC-V one?
+\newline
+\textbf{Solution: }
+\[= \frac{Performance of Intel Processor}{Performance of RISC-V}\]
+\[\implies \frac{\frac{1}{9}}{\frac{1}{12}} = \frac{12}{9} = \frac{4}{3} = 1.3\]
+\item
+What is the performance improvement of Intel processor over the RISC-V one?
+\newline
+\textbf{Solution: } Performance improvement of Intel processor over the RISC-V one is
+\[\bigg(\frac{\frac{Performance of Intel Processor}{Performance of RISC-V}}{Performance of RISC-V}\bigg) * 100\%\]
+\[\implies \small(\frac{12}{9} - 1\small) * 100\% \]
+\[\ = 33.3\%\]
+
+\end{qparts}
+
+\section*{3. My Intel processor has 4 cores, each running at 1 GHz. A single instance of a program, Y, can run on any of the cores in 20 seconds, and the processor is fully capable of running multiple copies of the same program in parallel on each core, without slowing down any of the individual instances. I have another processor from AMD, which has only a single core, but is running at 5 GHz. As a result, program Y can finish on this core in 4 seconds. If I was to pick a processor so as to optimize the latency of a single instance of program Y, which processor should I pick? Now assume that I want to pick a processor to optimize for system throughput, which processor should I pick? Explain your answer in both cases..
+}
+\begin{qparts}
+\item
+A processor clock is rated as 1500 million cycles per second. State the frequency of the processor in GHz. What is its clock cycle time?
+\newline
+\textbf{Solution: }
+AMD, because it is running the program in just 4 seconds while Intel is doing the same job in 20 seconds.
+\item
+If a processor has a frequency of 5 GHz, what is the clock cycle time of this processor?
+\newline
+\textbf{Solution: } AMD, because it can run 5 programs in 20 seconds, while Intel can run only 4 programs in 20 seconds.
+
+
+\end{qparts}
+
+\section*{4.
+}
+\begin{qparts}
+\item
+A processor clock is rated as 1500 million cycles per second. State the frequency of the processor in GHz. What is its clock cycle time?
+\newline
+\textbf{Solution: }
+= 1500 million cycles per second
+$= 1.5 * 10 ^{6}$Hz = 1.5Ghz
+
+\item
+If a processor has a frequency of 5 GHz, what is the clock cycle time of this processor? 
+\newline
+\textbf{Solution: } \[\text{Frequency of the processor} = 5GHz\]
+\[\text{Clock Time} = \frac{1}{5*10}s = 200ps\]
+
+\end{qparts}
+
+\section*{5. MyAwesomeProcessor™ had a power rating of 120 Watts. Due to the microarchitectural enhancements that I made to the processor, I could reduce the power rating to 100 Watts. In the process of carrying out these optimizations, I was able to reduce the frequency of the processor from 3.6 GHz to 3 GHz. However, in this process, due to features added on the chip, the execution time of Program A increased from 20 seconds to 22 seconds. If the energy consumption for Program A is my primary metric, are these microarchitectural enhancements worthwhile? Explain briefly.
+}
+\item
+\newline
+\textbf{Solution: }
+Power is directly proportional energy.
+\newline
+Since, after the changes the energy conservation is reduced. Therefore, changes made are worthwhile.
+\end{qparts}
+
+\section*{6.
+}
+\begin{qparts}
+\item
+Assume that a program takes 1 billion instructions to execute on a processor running at 2 GHz. Also assume that $50\%$ of the instructions execute in 3 clock cycles, 30\% execute in 4 clock cycles, and 20\% execute in 5 clock cycles. What is the execution time for the program in seconds?
+\newline
+\textbf{Solution: }
+Since, Execution Time = Total Instruction Count x Clock Cycle Time x Effective CPI
+\newline
+Effective CPI = \[(50\%*(10^{9}) * 3) + (30\% *(10^{9})*4) + (20\%*(10^{9})*5)\]
+\[= (1.5 + 1.2 + 1)\]
+\[= 3.7\]
+\newline
+Clock Cycle Time = $\freq{1}{2 * 10^{9}}$ = 0.5*10^{-9}s
+\newline 
+Therefore, Execution time = $10^{9} * (1/(2*10^{-9}) * 3.7 = 1.8s$
+\item
+Now, we redesign the processor in the part 1 such that all instructions that initially executed in 5 cycles now execute in 4 cycles. Due to changes in the circuitry, the clock rate has to be decreased from 2.0 GHz to 1.8 GHz. What is the overall percentage improvement of the new design over the old one, if any? Show your work. 
+\newline
+\textbf{Solution: } 
+
+Effective CPI = \[\frac{\text Total Clock Cycles}{Total Instructions}\]
+\[= (1.5+1.2+0.8)\]
+\[\implies 3.5\]
+\newline 
+Clock Cycle Time = $\frac{1}{1.8 * 10^{9}}s$ = 0.25*10^{-9}s
+\newline 
+Therefore, Execution Time = $10^{9} * (1/(1.8*10^{9}) * 3.5$ = 1.75s
+\newline 
+Performance Improvement = $(1.85-1.75)/1.85$ = 5\%
+\end{qparts}
+
+
+
+
+\end{document}

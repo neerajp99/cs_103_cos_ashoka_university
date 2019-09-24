@@ -1,0 +1,96 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,textcomp,amssymb,geometry,graphicx,enumerate}
+\usepackage{algorithm} % Boxes/formatting around algorithms
+\usepackage[noend]{algpseudocode} % Algorithms
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\def\Name{Neeraj Pandey}  % Your name
+%\def\SID{PUT SOMETHING HERE}  % Your student ID number
+%\def\Login{PUT SOMETHING HERE} % Your login (your class account, cs170-xy)
+\def\Homework{2} % Number of Homework
+\def\Session{Monsoon 2018}
+
+
+\title{CS103 -- Monsoon 2018 --- Homework \Homework}
+\author{\Name 
+%SID \SID, 
+%\texttt{\Login}
+}
+\markboth{CS103\Session\  Homework \Homework\ \Name}{CS103--\Session\ Homework \Homework\ \Name, %\texttt{\Login}
+}
+\pagestyle{myheadings}
+\date{}
+
+\newenvironment{qparts}{\begin{enumerate}[{(}a{)}]}{\end{enumerate}}
+\def\endproofmark{$\Box$}
+\newenvironment{proof}{\par{\bf Proof}:}{\endproofmark\smallskip}
+
+\textheight=9in
+\textwidth=6.5in
+\topmargin=-.75in
+\oddsidemargin=0.25in
+\evensidemargin=0.25in
+
+
+\begin{document}
+\maketitle
+
+Collaborators: NONE
+
+\section*{1. Express the following hexadecimal number in decimal and binary forms: 0xd3fa986.}
+\begin{qparts}
+
+\textbf{Solution: } Given hexadecimal code is: d3fa986 (neglecting the hex notation 0x)
+We know the decimal value of the hexadeimal characters; d,f,a:
+\[d=13, f=15, a=10\]
+The decimal value for the hexadecimal \textbf{d3fa986}: \[\small( 6*16^0\small) + \small( 68*16^1\small) + \small( 9*16^2\small) + \small( 10*16^3\small) + \small( 15*16^4\small) + \small( 3*16^5\small) + \small( 13*16^6\small)\]
+\[\implies 222275974\]
+\newline
+Now, we have to convert decimal into binary
+(`r is the remainder here`): 
+\[= 222275974_{10} / 2 - r_0\]
+\[= 111137987_{10} / 2 - r_1\]
+\[= 55568993_{10} / 2 - r_1\]
+\[= 27784496_{10} / 2 - r_0\]
+\[...\]
+\[...\]
+\newline
+Continuing the process until we have reached 0.
+\[\implies 1101001111111010100110000110_{2}\]
+
+\end{qparts}
+
+
+\section*{2. Annotate the following MIPS instructions to indicate source and destination registers. Also, describe in words (one sentence or less) what the instruction is trying to do. }
+
+\begin{qparts}
+\item addi \$t1, \$zero, 8
+
+\textbf{Solution:} Destination: \$t1 \newline
+Source: \$zero
+\newline 
+Instruction: To get the value of \$t1 by performing the calculation of 0+8
+
+\item lw \$s3, 4(\$gp)
+\textbf{Solution:}Destination: \$s3
+\newline
+Source: \$gp
+\newline
+Instruction: To get the value of \s3 from the base address of 4.
+
+
+\item sw \$s4, 10(\$s5)
+\textbf{Solution:}Destination: \$s5
+\newline
+Source: \$s4
+\newline
+Instruction: Store the value of \$s4 in a specified address.
+
+\end{qparts}
+\end{document}

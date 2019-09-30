@@ -51,8 +51,8 @@ For the register values shown above, what is the value of \$t2 for the following
 }
 \begin{qparts}
 \item 
-srl 	$t2, 	$t0, 	3 \newline
-andi 	$t2, 	$t2, 	0xFFEF
+srl     $t2,    $t0,    3 \newline
+andi    $t2,    $t2,    0xFFEF
 
 \textbf{Solution: } Binary value of \$t0 = 10001001101010111100110111101111 \newline
 According to the first instruction, \$t0 is shifted by 3bits:
@@ -67,15 +67,16 @@ According to the second instruction,
 
 
 \item 
-sll	$t2, 	$t0, 	10
-or 	$t2, 	$t2, 	$t1
+sll \$t2,   \$t0,   10
+\newline
+or  \$t2,   \$t2,   \$t1
 
-\textbf{Solution: } Binary value of \$t1 =  10010001101000101011001111000
+\textbf{Solution: } Binary value of \$t0 =  10001001101010111100110111101111
 \newline 
 According to the first instruction, \$t0 is shifted by 10bits:
 \[\$t2 = 10101111001101111011110000000000\]
 According to the second instruction: 
-\[10101111001101111011110000000000 \textbf{\text{  AND  }} 00010010001101000101011001111000\]
+\[10101111001101111011110000000000 \textbf{\text{  OR  }} 00010010001101000101011001111000\]
 \[= 10111111001101111111111001111000\]
 \[\implies \$t2 = 0xBF37FE78\]
 

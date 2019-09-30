@@ -1,0 +1,141 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,textcomp,amssymb,geometry,graphicx,enumerate}
+\usepackage{algorithm} % Boxes/formatting around algorithms
+\usepackage[noend]{algpseudocode} % Algorithms
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\def\Name{Neeraj Pandey}  % Your name
+%\def\SID{PUT SOMETHING HERE}  % Your student ID number
+%\def\Login{PUT SOMETHING HERE} % Your login (your class account, cs170-xy)
+\def\Homework{3} % Number of Homework
+\def\Session{Monsoon 2018}
+
+
+\title{CS103 -- Monsoon 2018 --- Homework \Homework}
+\author{\Name 
+%SID \SID, 
+%\texttt{\Login}
+}
+\markboth{CS103\Session\  Homework \Homework\ \Name}{CS103--\Session\ Homework \Homework\ \Name, %\texttt{\Login}
+}
+\pagestyle{myheadings}
+\date{}
+
+\newenvironment{qparts}{\begin{enumerate}[{(}a{)}]}{\end{enumerate}}
+\def\endproofmark{$\Box$}
+\newenvironment{proof}{\par{\bf Proof}:}{\endproofmark\smallskip}
+
+\textheight=9in
+\textwidth=6.5in
+\topmargin=-.75in
+\oddsidemargin=0.25in
+\evensidemargin=0.25in
+
+
+\begin{document}
+\maketitle
+
+Collaborators: NONE
+
+\section*{1. Assume the following register contents:
+\newline
+\$t0 = 0x89ABCDEF, \$t1 = 0x12345678
+\newline
+For the register values shown above, what is the value of \$t2 for the following sequence of instructions? There are come instructions whose functionality you might have to look up in the textbook, or on the Internet. Show your work.
+}
+\begin{qparts}
+\item 
+srl 	$t2, 	$t0, 	3 \newline
+andi 	$t2, 	$t2, 	0xFFEF
+
+\textbf{Solution: } Binary value of \$t0 = 10001001101010111100110111101111 \newline
+According to the first instruction, \$t0 is shifted by 3bits:
+\[\$t2 =  00010001001101010111100110111101\]
+Binary value of 0xFFEF is 1111111111101111
+\newline 
+According to the second instruction, 
+\[00010001001101010111100110111101 \textbf{\text{  AND  }} 00000000000000001111111111101111\]
+\[= 00000000000000000111100110101101\]
+\[\implies \$t2 = 0x000079AD\]
+\newline 
+
+
+\item 
+sll	$t2, 	$t0, 	10
+or 	$t2, 	$t2, 	$t1
+
+\textbf{Solution: } Binary value of \$t1 =  10010001101000101011001111000
+\newline 
+According to the first instruction, \$t0 is shifted by 10bits:
+\[\$t2 = 10101111001101111011110000000000\]
+According to the second instruction: 
+\[10101111001101111011110000000000 \textbf{\text{  AND  }} 00010010001101000101011001111000\]
+\[= 10111111001101111111111001111000\]
+\[\implies \$t2 = 0xBF37FE78\]
+
+
+\end{qparts}
+
+
+\section*{2. instructions to save/restore values on the stack and update the stack pointer. Assume that procA and procB were written independently by two different programmers who are following the MIPS guidelines for caller-saved and callee-saved registers. In other words, the two programmers agree on the input arguments and return value of procB, but they can't see the code written by the other person. Be sure to read the textbook and lecture slides so you understand the MIPS guidelines for caller-saved and callee-saved registers. }
+
+
+
+\textbf{Solution:} procA: \\
+    \$s0 = ... \\
+    \$t1 = ... \\
+    \$s1 = ... \\
+    \$t2 = ... \\
+    \$s2 = ... \\
+    \$t0 = ... \\
+    L \\
+    \$a1 = .. \\
+    \$a0 = ... \\   
+    \textbf{
+    addi \$sp, \$sp, -12 \newline
+    sw \$ra, 8(\$sp) \newline 
+    sw \$a0, 4(\$sp) \newline 
+    sw \$a1, 0(\$sp) \newline
+    }
+    jal procB \newline 
+    \textbf{
+    lw \$ra, 8(\$sp) \newline
+    lw \$a0, 4(\$sp)\newline
+    lw \$a1, 0(\$sp)\newline
+    addi \$sp, \$sp, 12\newline
+    }
+    M \\
+    ... =\$s1 \\
+    ... =\$t0 \\
+    ... =\$t1 \\
+    ... =\$a0 \\
+    ... =\$s3 \\
+     jr \$ra \\
+     \newline 
+     procB: \\ 
+    U \\
+    \textbf{
+    addi \$sp, \$sp, -8 \newline
+    sw \$s2, 4(\$sp)\newline
+    sw \$s3, 0(\$sp)\newline
+    }
+    ... = \$a0 \\
+    ... = \$a1 \\
+    \$s2 = ...\\
+    \$s3 = ...\\
+    \$t0 = ...\\
+    \textbf{
+    lw \$s2, 4(\$sp)\newline
+    lw \$s3, 0(\$sp)\newline
+    addi \$sp, \$sp, 8\newline
+    }\\
+    X\\
+    jr \$ra
+
+\end{document}

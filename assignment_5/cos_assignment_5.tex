@@ -1,0 +1,164 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,textcomp,amssymb,geometry,graphicx,enumerate}
+\usepackage{algorithm} % Boxes/formatting around algorithms
+\usepackage[noend]{algpseudocode} % Algorithms
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\def\Name{Neeraj Pandey}  % Your name
+%\def\SID{PUT SOMETHING HERE}  % Your student ID number
+%\def\Login{PUT SOMETHING HERE} % Your login (your class account, cs170-xy)
+\def\Homework{3} % Number of Homework
+\def\Session{Monsoon 2018}
+
+
+\title{CS103 -- Monsoon 2018 --- Homework \Homework}
+\author{\Name 
+%SID \SID, 
+%\texttt{\Login}
+}
+\markboth{CS103\Session\  Homework \Homework\ \Name}{CS103--\Session\ Homework \Homework\ \Name, %\texttt{\Login}
+}
+\pagestyle{myheadings}
+\date{}
+
+\newenvironment{qparts}{\begin{enumerate}[{(}a{)}]}{\end{enumerate}}
+\def\endproofmark{$\Box$}
+\newenvironment{proof}{\par{\bf Proof}:}{\endproofmark\smallskip}
+
+\textheight=9in
+\textwidth=6.5in
+\topmargin=-.75in
+\oddsidemargin=0.25in
+\evensidemargin=0.25in
+
+
+\begin{document}
+\maketitle
+
+Collaborators: None
+
+\section*{Question 1: Consider an unpipelined or single-stage processor design like the one discussed in class. At the start of a cycle, a new instruction enters the processor and is processed completely within a single cycle. It takes 1500 ps to navigate all the circuits. Therefore, for this design to work, the cycle time has to be at least 1500 picoseconds.}
+\begin{qparts}
+\item
+What is the clock speed of this processor? 
+\newline
+\textbf{Solution (a): } There are 1500ps in 1 cycle
+\[= 1500 * 10\text{ sec}\]
+\[= \frac{10^{12}}{1500}\]
+\[= \frac{10^{10}}{15}\]
+\[= \frac{2}{3} * 10^{9}\]
+\[\implies 0.666 * 10^{9}\text{ Hz}\]
+
+\item What is the CPI of this processor, assuming that every load/store instruction finds its instruction/data in the instruction or data cache (memory)?
+\newline
+\textbf{Solution (b): } Average CPI is 1 because each instruction takes only 1 instruction to run.
+
+\item What is the throughput of this processor (in billion instructions per second)?
+\newline
+\textbf{Solution (c):} 1 instruction takes 1500ps \\
+\[1500 * 10^{-12} * 10 ^{9}\]
+\[= 1500 * 10^{-3}\]
+\[= 1.5\text{ sec = 1 Billion instructions}\]
+\[\implies 1\text{sec} = \frac{10^{9}}{1.5}\]
+\[= 0.0666 \text{ billion instructions per second}\]
+\end{qparts}
+
+\section*{Question 2: The processor in Q1 above is converted into a 5-stage pipeline, similar to the one discussed in class. It takes 300 ps to navigate the circuits in each stage. Assume that latches do not introduce a noticeable overhead.}
+\begin{qparts}
+\item What is the clock speed of this processor? 
+\newline
+\textbf{Solution (a): } 1 cycle = 300ps\\
+\[= 300 * 10^{-12}\]
+\[\implies 1\text{sec} = \frac{10^{12}}{300}\]
+\[= 3.3 * 10^{9} \text{ Hz}\]
+
+\item What is the CPI of this processor, assuming that every load/store instruction finds its instruction/data in the instruction or data cache, and there are no stalls from data/control/structural hazards? 
+\newline
+\textbf{Solution (b): } The CPI is 1 as one instruction is finished in 1 cycle.
+
+\item What is the throughput of this processor (in billion instructions per second)?
+\newline 
+\textbf{Solution (c): } 1 instruction completes 1 cycle of the processor. Therefore, throughput of the processor: \\
+\[3.3 \text{ Billion/second}\]
+\end{qparts}
+
+\section*{Question 3: Show how the following four instructions move through each stage of the five stage pipeline, similar to the example discussed in class. Assume that this pipeline does not support any bypassing. Make sure the decode stage does not advance an instruction through the pipeline unless all data dependencies are correctly resolved. Assume that register reads and writes take half a cycle each, with the same convention as discussed in class. 
+}
+\newline
+\textbf{Solution 3: } 
+\begin{table}
+\centering
+\begin{tabular}{lllll}
+IM & Reg R & ALU & DM & Reg W  \\
+I1 &       &     &    &        \\
+I2 & I1    &     &    &        \\
+I3 & I2    & I1  &    &        \\
+I3 & I3    & I2  & I1 &        \\
+I4 & I3    &     & I2 & I1     \\
+   & I3    &     &    & I2     \\
+   & I4    & I3  &    &        \\
+   &       & I4  &    &        \\
+   &       &     & I3 &        \\
+   &       &     & I4 & I3     \\
+   &       &     & I4 &       
+\end{tabular}
+\end{table}
+
+\section*{Question 4: Identify all data dependencies between these instructions. Assume that your processor has a 5 stage pipeline that does not support bypassing. Also assume that both memory reads and writes take one full cycle. Show the flow of these instructions through the 5 stage pipeline. How many cycles will it take to execute all these instructions? Show your work.} 
+\textbf{Solution: 4}
+
+
+\begin{table}
+\centering
+\begin{tabular}{lllll}
+IM & Reg R & ALU & DM & Reg W  \\
+I1 &       &     &    &        \\
+I2 & I1    &     &    &        \\
+I3 & I2    & I1  &    &        \\
+I4 & I3    & I2  & I1 &        \\
+I4 & I3    &     &    & I1     \\
+I4 & I3    &     &    & I2     \\
+I4 & I3    &     &    &        \\
+   & I4    & I3  &    &        \\
+   &       & I4  & I3 &        \\
+   &       &     & I4 & I3     \\
+   &       &     & I4 &       
+\end{tabular}
+\end{table}
+
+
+\section*{Question 5: In a 5 stage pipeline, assume the presence of a control instruction, bne, which has the following format : bne $t0,$t1, 1024. The pipeline has been designed such that you are able to find out that $t0 and $t1 are either equal or not only at the end of the ALU stage. Additionally, you are able to calculate the target of the branch (PC+1024) only at the end of the Data Memory stage. In this case, how many instructions will need to be squashed because of these assumptions?  Give reasons for your claim. }
+
+\textbf{Solution: } We are able to know that the $\$t0$ and $\$t1$ are not equal and at the fourth cycle, the counter changes for the program and the fifth cycle starts at the branch (PC + 1024). So, 4 instructions need to be squashed.
+
+\section *{Question 6: }
+\begin{qparts}
+\item What is the cycle time of both processors? 
+\newline 
+\textbf{Solution (a): } P1 cycle time = 450 + 20 ps $\implies$ 470ps \\ and P2 cycle time = 620 + 20 ps $\implies$ 640ps
+
+\item What is the latency of executing a single instruction on P1 and P2? 
+\newline
+\textbf{Solution (b): } For one second : Latency of P1 = 5 * 470 ps $\implies$ 2350ps \\ and Latency of P2 = 5 * 640 $\implies$ 3200ps
+
+\item What is the maximum possible throughput for each processor, assuming ideal conditions? 
+\newline
+\textbf{Solution (c): } Throughput for P1 = $\frac{1}{470 \text{ ps}}$ = $\frac{10^{12}}{470}$ $\implies$ 2.1 * 10^9 instructions \\ and Throughput for P2 = $\frac{1}{640 \text{ ps}}$ = $\frac{10^{12}}{640}$ $\implies$ 1.5 * 10^9 instructions
+
+\item Which one is faster? Explain briefly.
+\newline 
+\textbf{Solution (d): } The cycle time of P1 is less than that of P2, which allows the 5th pipleline in P1 to finish first. Therefore, P1 is faster than P2.
+\end{qparts}
+
+
+
+
+
+\
+\end{document}

@@ -1,0 +1,252 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,textcomp,amssymb,geometry,graphicx,enumerate}
+\usepackage{algorithm} % Boxes/formatting around algorithms
+\usepackage[noend]{algpseudocode} % Algorithms
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\graphicspath{ {./images/} }
+\usepackage[legalpaper, portrait, margin=0.9in]{geometry}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=blue,
+}
+
+\def\Name{Neeraj Pandey}  % Your name
+%\def\SID{PUT SOMETHING HERE}  % Your student ID number
+%\def\Login{PUT SOMETHING HERE} % Your login (your class account, cs170-xy)
+\def\Homework{6} % Number of Homework
+\def\Session{Monsoon 2018}
+
+
+\title{CS103 -- Monsoon 2018 --- Homework \Homework}
+\author{\Name 
+	%SID \SID, 
+	%\texttt{\Login}
+}
+\markboth{CS103\Session\  Homework \Homework\ \Name}{CS103--\Session\ Homework \Homework\ \Name, %\texttt{\Login}
+}
+\pagestyle{myheadings}
+\date{}
+
+\newenvironment{qparts}{\begin{enumerate}[{(}a{)}]}{\end{enumerate}}
+\def\endproofmark{$\Box$}
+\newenvironment{proof}{\par{\bf Proof}:}{\endproofmark\smallskip}
+
+\textheight=9in
+\textwidth=6.5in
+\topmargin=-.75in
+\oddsidemargin=0.25in
+\evensidemargin=0.25in
+
+
+\begin{document}
+\maketitle
+
+Collaborators: None
+\section* {Question 1: Consider an in-order 5-stage pipeline similar to the one discussed in class. First assume that the pipeline does not support bypassing (forwarding). What are the stall cycles introduced between the following pairs of back-to-back instructions? Then, solve the same problem while assuming support for bypassing. Clearly show your work, i.e., show how each instruction goes through the 5 stages, indicate the point of production and point of consumption, show how the consuming instruction is held back in the D/R stage when there are stalls. Recall that a register read is performed in the second half of the D/R stage and a register write is performed in the first half of the RW stage.  }
+\begin{qparts} 
+	\item 
+	$\text{lw } \$1, 8(\$2) $ \\
+	$\text{add } \$4, \$1, \$3$
+	\newline 
+	\textbf{Solution (a): } \\
+	$\text{I1 = lw } \$1, 8(\$2) $ \\
+	$\text{I2 = add } \$4, \$1, \$3$
+	\[\text{Without Bypassing}\]
+	\newline
+	\[\includegraphics[page=1,width=0.85\textwidth,center]{image1}\]
+	\newline 
+	\[\text{Stall cycles = C3 and C4}\]
+	
+	\newline 
+	\[\text{\textbf{With Bypassing}}\]
+	\[\includegraphics[page=1,width=0.85\textwidth,center]{image2}\] \\
+	\[\text{Stall cycle = 1 for I2}\]
+	
+	\item 
+	$\text{lw } \$1, 8(\$2) $\\
+	$ \text{sw } \$3, 8(\$1) $
+	
+	\textbf{Solution (b) :} 
+	$\text{I1 = lw } \$1, 8(\$2) $\\
+	$ \text{I2 = sw } \$3, 8(\$1) $
+	
+	\[\text{Without Bypassing}\]
+	
+	\newline 
+	\[\includegraphics[page=1,width=0.85\textwidth,center]{image3}\] \\
+	\[\text{Stall cycles = C3 and C4}\]
+	\newline 
+	
+	\[\text{With Bypassing}\]
+	
+	\[\includegraphics[page=1,width=0.85\textwidth,center]{image4}\] \\
+	\[\text{Stall cycle = 1 for I2}\]
+	
+\end{qparts}
+
+
+\section*{Question 2: Consider an in-order pipeline that has the same stages as a 5 stage pipeline discussed in class. However, unlike the 5-stage pipeline discussed in class, a register read in this design takes an entire cycle and a register write takes an entire cycle (and not a half cycle).
+Use the same sequence of instructions from Question 1, and show how these sequences proceed through the pipeline. Indicate the number of stall cycles that are experienced by each sequence. Show your work for both versions of the pipeline: one without bypassing, and another one with bypassing. }
+\textbf{Solution 2(a): }  
+
+$\text{I1 = lw } \$1, 8(\$2) $ \\
+$\text{I2 = add } \$4, \$1, \$3$
+\newline 
+\[\text{Without Bypassing}\]
+\[\includegraphics[page=1,width=0.85\textwidth,center]{image5}\] \\
+\[\text{Stall cycles = 3 for I2}\]
+
+\newline 
+\[\text{With Bypassing}\]
+
+\[\includegraphics[page=1,width=0.85\textwidth,center]{image6}\] \\
+\[\text{Stall cycles = 1 for I2}\]
+
+\textbf{Solution 2(b): } 
+
+$\text{I1 = lw } \$1, 8(\$2) $\\
+$ \text{I2 = sw } \$3, 8(\$1) $
+
+\newline 
+\[\text{Without Bypassing}\]
+\[\includegraphics[page=1,width=0.85\textwidth,center]{image7}\] \\
+\[\text{Stal cycles = 3 for I2}\]
+
+\newline 
+\[\text{With Bypassing}\]
+
+\[\includegraphics[page=1,width=0.85\textwidth,center]{image8}\]  \\
+\[\text{Stall cyles = 1 for I2}\]
+
+\section* {Question 3: Assume a new pipeline design as shown in the pipeline diagram below. This is an example of a “bifurcated” pipeline that we have discussed in class. After instruction fetch, the instruction goes through a separate Decode stage where dependences are analyzed, then a separate RegRead stage where input operands are read from the register file. After this, an instruction takes one of two possible paths. Int-adds go through the stages labeled "IntALU" and "RegWrite". Loads/stores go through the stages labeled "IntALU", "DataMem", "DataMem", and "RegWrite", i.e., it takes two cycles to retrieve data from the data memory unit. How many stall cycles are introduced between the following pairs of successive instructions (i) for a processor with no register bypassing and (ii) for a processor with full bypassing?}
+\begin{qparts}
+	\item 
+	$\text{add } \$1, \$2, \$3$ \\
+	$\text{add } \$4, \$1, \$5$
+	\newline 
+	\textbf{Solution (a): } \\
+	$\text{I1 = add } \$1, \$2, \$3$ \\
+	$\text{I2 = add } \$4, \$1, \$5$
+	
+	\newline
+	\[\text{Without Bypassing }\]
+	\[\includegraphics[page=1,width=0.85\textwidth,center]{image9}\]  \\
+	\[\text{Stall cyles = 1 for I2}\]
+	
+	\newline 
+	\[\text{With Bypassing }\]
+	\[\includegraphics[page=1,width=0.85\textwidth,center]{image10}\]  \\
+	\[\text{Stall cycles = 1 for I2}\]
+	
+	\item 
+	$\text{lw } \$1, 8(\$2)$\\
+	$\text{lw } \$3, 8(\$1)$
+	
+	\textbf {Solution (b): }
+	
+	$\text{I1 = lw } \$1, 8(\$2)$\\
+	$\text{I2 = lw } \$3, 8(\$1)$
+	\newline
+	\[\text{Without Bypassing }\]
+	\[\includegraphics[page=1,width=0.85\textwidth,center]{image11}\]  \\
+	\[\text{Stall cycle  = 3 for I2}\]
+	
+	\newline 
+	\[\text{With Bypassing }\]
+	\[\includegraphics[page=1,width=0.85\textwidth,center]{image12}\] \\
+	\[\text {Stall cycles = 2 for I2}\]
+	\newline
+\end{qparts}
+
+\section*{Question 4: Consider a program that executes a large number of instructions. Assume that the program does not suffer from stalls from data hazards or structural hazards. Assume that 20\% of all instructions are branch instructions, and 75\% of these branch instructions are Taken. What is the average CPI for this program when it executes on each of the processors listed below? All of these processors implement an 10-stage pipeline and resolve a branch outcome at the end of the 4th stage. The 1st stage fetches an instruction, the 2nd stage does decode, the 3rd stage does register read, and the 4th stage does the computations for the branch.}
+\begin{qparts}
+	\item The processor pauses instruction fetch as soon as it fetches a branch. Instruction fetch is resumed after the branch outcome has been resolved.
+	\newline 
+	\textbf{Solution (a): }
+	The next instruction is called for after the fourth stage because the processor will not call any instruction unless the outcome is resolved.
+	Cycles lost: 0.2 x 3 = 0.6 times the initial instructions.
+	\newline
+	Average CPI = $\frac{\text{Number of cycles to execute the program}}{\text{Initial instructions}}$ 
+	\newline 
+	$\frac{1.6k}{k}$ ; for k + 0.6k  initial instructions
+	$\implies \text{1.6}$
+	
+	\newline 
+	\item The processor always fetches instructions sequentially. If a branch is resolved as Taken, the incorrectly fetched instructions after the branch are squashed.
+	\newline 
+	\textbf{Solution (b): } 
+	Here we need to squash the three instructions because the branch is resolve after the fourth stage.
+	\newline 
+	Cycles lost: 0.15 x 3 = 0.45 times the initial instructions
+	\newline 
+	Average CPI = $\frac{\text{Number of cycles to execute the program}}{\text{Initial instructions}}$ 
+	\newline 
+	$\frac{1.45k}{k}$ ; for k + 0.45k  initial instructions
+	$\implies \text{1.45}$
+	
+	\item 
+	The processor implements three branch delay slots. The compiler fills the branch delay slots with three instructions that come before the branch in the original code. 
+	\newline 
+	\textbf{Solution (c): }
+	Here, Average CPI = 1 as we don't loose any additional cycles for the instructions because the compiler fills up the delay shots with the instructions.
+	
+	\item 
+	The processor does not implement branch delay slots. Instead, it implements a hardware branch predictor that makes correct predictions for 90\% of all branches. When an incorrect prediction is discovered, the incorrectly fetched instructions after the branch are squashed.
+	
+	\newline 
+	\textbf{Solution (d): } 
+	Here, 10\% predictions are incorrect, which means we are loosing 0.1 x 0.2 = 0.02 times the initial instructions.
+	\newline 
+	Instructions to squash: 0.02 x 3 = 0.06 times the initial instructions
+	\newline 
+	Average CPI = $\frac{\text{Number of cycles to execute the program}}{\text{Initial instructions}}$ 
+	\newline 
+	$\frac{1.06k}{k}$ ; for k + 0.06k  initial instructions
+	$\implies \text{1.06}$
+	
+\end{qparts}
+
+\section*{Question 5: Assume that you have a 2 bit saturating counter (with the initial value of 11). Every time the branch is taken, the counter is incremented, and is decremented every time the branch is not taken. }
+\newline 
+\begin{qparts}
+	\item Show the change in the counter for the following sequence of 9 events: T,N,N,T,N,N,T,N,N  (T stands for taken and N stands for not taken, and these are the actual outcomes of the branch). (5 points)
+	\newline 
+	\textbf{Solution (a): }
+	Total events = 9 \\
+	Intitial value = 11 \\
+	T = 11 \\
+	N = 10 \\
+	N = 01 \\
+	T = 10 \\
+	N = 01 \\
+	N = 00 \\
+	T = 01 \\ 
+	N = 00 \\
+	N = 00 \\
+	
+	\item What will the prediction be for the 10th sequence? Assume the predictions for the 2 bit predictor as discussed in class 
+	\newline 
+	\textbf{Solution (b): } 10th sequence will be predicted as not taken.
+\end{qparts}
+
+\section* {If you have a 2-bit bimodal predictor with 4096 entries, how many bits from the Branch PC will be required to index entries in this table? What is the total storage capacity of the table? If we change the predictor to be a 1 bit bimodal predictor, while keeping constant the number of table entries, how many bits from the Branch PC will be required to index into the table? }
+\nelwine 
+\textbf{Solution: } Given: 2-bit bi-modal predictor with 4096 entries.
+\newline 
+So, we require 12 bits from the Branch PC ($2^!2 = 4096$)
+\newline 
+Storage capacity = 4096 * 2 = 1024 bytes 
+
+
+
+
+\end{document}
